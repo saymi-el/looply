@@ -1,30 +1,27 @@
-# 🎬 Looply - SaaS de Génération de Vidéos IA
+# Looply - SaaS de Génération de Vidéos IA
 
-## 🚀 Aperçu
+## Aperçu
 
 **Looply** est une plateforme SaaS qui génère automatiquement des vidéos personnalisées en utilisant l'intelligence artificielle. Transformez simplement un sujet et un ton en vidéo complète avec script, audio, visuels et assemblage automatique.
 
 **Stack technique :** Node.js + TypeScript + Fastify + OpenAI GPT-4o-mini + PostgreSQL + Redis + Docker
 
-## 📚 Documentation complète
+## Documentation complète
 
-- **📖 [Documentation générale](DOCUMENTATION.md)** - Architecture complète, modules et fonctionnalités
-- **🚀 [Guide de démarrage rapide](QUICK_START.md)** - Installation et premiers tests en 5 minutes  
-- **🔌 [Documentation API](API.md)** - Tous les endpoints avec exemples détaillés
+- **[Documentation générale](DOCUMENTATION.md)** - Architecture complète, modules et fonctionnalités
+- **[Guide de démarrage rapide](QUICK_START.md)** - Installation et premiers tests en 5 minutes  
+- **[Documentation API](API.md)** - Tous les endpoints avec exemples détaillés
 
-## ✨ Fonctionnalités principales
+## Fonctionnalités principales
 
-- 🤖 **Génération de scripts intelligents** avec OpenAI GPT-4o-mini
-- 🎙️ **Synthèse vocale automatique** (ElevenLabs - en cours)
-- 🎨 **Génération d'assets visuels** avec prompts WAN 2.2 (en cours)
-- 🎞️ **Assemblage vidéo automatique** via Shotstack (en cours)
-- 🔄 **Pipeline asynchrone** avec Redis et BullMQ
-- 🔐 **Authentification JWT** sécurisée
-- 📊 **API REST complète** avec Swagger UI
+- **Génération de scripts intelligents** avec OpenAI GPT-4o-mini
+-️ **Synthèse vocale automatique** (ElevenLabs - en cours)
+- **Génération d'assets visuels** avec prompts WAN 2.2 (en cours)
+-️ **Assemblage vidéo automatique** via Shotstack (en cours)
+- **Pipeline asynchrone** avec Redis et BullMQ
+- **Authentification JWT** sécurisée
 
-## ⚡ Démarrage rapide
 
-```bash
 # 1. Installation
 git clone <repo>
 cd Looply
@@ -49,7 +46,7 @@ npm run worker  # Worker (terminal 2)
 - PostgreSQL : localhost:5433
 - Redis : localhost:6380
 
-## 📂 Structure du projet
+## Structure du projet
 
 ```
 src/
@@ -87,7 +84,7 @@ src/
     └── video.worker.ts    # Worker de traitement vidéo
 ```
 
-## 🎥 Pipeline de génération vidéo
+## Pipeline de génération vidéo
 
 ```mermaid
 graph LR
@@ -100,12 +97,12 @@ graph LR
 
 **Étapes détaillées :**
 
-1. **📝 Script (0→20%)** - OpenAI génère un script narratif + 3 prompts visuels WAN 2.2
-2. **🔊 Audio (20→45%)** - Conversion texte vers parole avec ElevenLabs
-3. **🎨 Visuels (45→70%)** - Génération d'images synchronisées avec WAN 2.2
-4. **🎞️ Assemblage (70→100%)** - Montage final avec Shotstack
+1. **Script (0→20%)** - OpenAI génère un script narratif + 3 prompts visuels WAN 2.2
+2. **Audio (20→45%)** - Conversion texte vers parole avec ElevenLabs
+3. **Visuels (45→70%)** - Génération d'images synchronisées avec WAN 2.2
+4. **Assemblage (70→100%)** - Montage final avec Shotstack
 
-## 🔧 API Endpoints principaux
+## API Endpoints principaux
 
 ### Authentification
 - `POST /api/v1/auth/signup` - Inscription
@@ -123,7 +120,7 @@ graph LR
 ### Système
 - `GET /api/v1/system/health` - Health check
 
-## 🗄️ Base de données
+## Base de données
 
 **Tables Prisma :**
 - `User` - Comptes utilisateurs
@@ -136,7 +133,7 @@ graph LR
 - `COMPLETED` - Terminé
 - `FAILED` - Échec
 
-## 🔑 Variables d'environnement
+## Variables d'environnement
 
 ```bash
 # Serveur
@@ -159,7 +156,7 @@ CORS_ORIGIN="http://localhost:3000"
 OPENAI_API_KEY="sk-votre-clé-openai"
 ```
 
-## 📊 Exemple de génération
+## Exemple de génération
 
 **Input :**
 ```json
@@ -185,7 +182,7 @@ OPENAI_API_KEY="sk-votre-clé-openai"
 }
 ```
 
-## 🧪 Tests et développement
+## Tests et développement
 
 ```bash
 # Tests manuels
@@ -199,7 +196,7 @@ npm run dev     # Logs en temps réel
 npm run worker  # Worker avec logs détaillés
 ```
 
-## 🚀 Déploiement
+## Déploiement
 
 **Prérequis production :**
 - Node.js 18+
@@ -212,22 +209,22 @@ npm run worker  # Worker avec logs détaillés
 - `DATABASE_URL` - Connexion sécurisée
 - `OPENAI_API_KEY` - Clé de production
 
-## 🛠️ Roadmap
+## Roadmap
 
-### ✅ Fonctionnalités complètes
-- ✅ Architecture Fastify + TypeScript
-- ✅ Authentification JWT
-- ✅ Génération de scripts OpenAI GPT-4o-mini
-- ✅ Prompts vidéo WAN 2.2 structurés
-- ✅ Pipeline asynchrone avec BullMQ
-- ✅ Logs détaillés et monitoring
+### Fonctionnalités complètes
+- Architecture Fastify + TypeScript
+- Authentification JWT
+- Génération de scripts OpenAI GPT-4o-mini
+- Prompts vidéo WAN 2.2 structurés
+- Pipeline asynchrone avec BullMQ
+- Logs détaillés et monitoring
 
-### 🚧 En cours d'intégration
-- 🔄 **ElevenLabs** - Synthèse vocale réaliste
-- 🔄 **WAN 2.2** - Génération d'images IA
-- 🔄 **Shotstack** - Assemblage vidéo professionnel
+### En cours d'intégration
+- **ElevenLabs** - Synthèse vocale réaliste
+- **WAN 2.2** - Génération d'images IA
+- **Shotstack** - Assemblage vidéo professionnel
 
-### 📋 Améliorations prévues
+### Améliorations prévues
 - [ ] Rate limiting et quotas
 - [ ] Interface d'administration
 - [ ] Analytics et métriques
@@ -236,7 +233,7 @@ npm run worker  # Worker avec logs détaillés
 - [ ] Tests automatisés
 - [ ] CI/CD pipeline
 
-## 📞 Support
+## Support
 
 **Documentation :** Voir les fichiers `.md` dans le projet
 **Health check :** `GET /api/v1/system/health`
