@@ -1,6 +1,6 @@
-# 🚀 Guide de démarrage rapide - Looply API
+# Guide de démarrage rapide - Looply API
 
-## ⚡ Démarrage en 5 minutes
+## Démarrage en 5 minutes
 
 ### 1. Installation
 ```bash
@@ -54,7 +54,7 @@ curl -X POST http://localhost:3000/api/v1/video \
 
 ---
 
-## 📚 Exemples d'utilisation
+## Exemples d'utilisation
 
 ### Génération de vidéo avec OpenAI
 ```javascript
@@ -104,7 +104,7 @@ const status = await fetch(`http://localhost:3000/api/v1/video/${jobId}`, {
 
 ---
 
-## 🔧 Commandes utiles
+## Commandes utiles
 
 ### Développement
 ```bash
@@ -150,7 +150,7 @@ sudo docker-compose down
 
 ---
 
-## 🐛 Debug et dépannage
+## Debug et dépannage
 
 ### Problèmes fréquents
 
@@ -190,7 +190,7 @@ DEBUG=prisma:query npm run dev
 
 ---
 
-## 📊 Métriques et monitoring
+## Métriques et monitoring
 
 ### Health check
 ```bash
@@ -209,7 +209,7 @@ Les logs montrent :
 
 ---
 
-## 🎯 Cas d'usage
+## Cas d'usage
 
 ### 1. Vidéo marketing
 ```json
@@ -240,7 +240,7 @@ Les logs montrent :
 
 ---
 
-## 🔒 Authentification rapide
+## Authentification rapide
 
 ### Flow complet
 ```bash
