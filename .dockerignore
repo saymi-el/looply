@@ -1,0 +1,16 @@
+# Tout ce qui ne sert pas à l'image
+node_modules
+dist
+.git
+.gitignore
+.vscode
+.idea
+.DS_Store
+logs
+coverage
+.nyc_output
+.eslintcache
+.env
+.env.*
+!.env.example
+docker-data
