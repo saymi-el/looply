@@ -1,6 +1,6 @@
 # État Actuel du Projet Looply
 
-*Mis à jour le 24 septembre 2025*
+*Mis à jour le 1er octobre 2025*
 
 ## Fonctionnalités 100% Opérationnelles
 
@@ -16,28 +16,47 @@
 - **Connexion JWT** - Tokens sécurisés avec expiration 7 jours
 - **Middleware de protection** - Routes privées automatiques
 - **Hachage bcrypt** - Mots de passe sécurisés (10 rounds)
+- **Validation webhook** - Signature HMAC pour sécuriser les callbacks
 
 ### Gestion Utilisateurs
 - **Profils utilisateurs** - CRUD complet (create, read, update)
 - **Relation User/Profile** - Modèle Prisma bien structuré
 
-### Intelligence Artificielle
+### Intelligence Artificielle (Structure Modulaire)
 - **Intégration OpenAI** - GPT-4o-mini fonctionnel
+- **Architecture modulaire** - Code réorganisé en modules spécialisés:
+  - `src/modules/ai/script/` - Génération de scripts et utilitaires
+  - `src/modules/ai/audio/` - Synthèse audio
+  - `src/modules/ai/visual/` - Génération d'images  
+  - `src/modules/ai/video/` - Assemblage vidéo
+  - `src/modules/ai/shared/` - Configuration partagée
 - **Génération de scripts** - Scripts narratifs de qualité
 - **Prompts vidéo WAN 2.2** - Format structuré avec positive/negative
+- **Styles visuels** - 6 catalogues définis (modern, cinematic, minimal, etc.)
 - **Parsing JSON robuste** - Nettoyage automatique des réponses
 - **Fallback gracieux** - Système de secours sans clé API
 - **Logs détaillés** - Traçabilité complète du processus
 
+### 🚀 Intégration Vast.ai (NOUVEAU)
+- **Module Vast.ai** - Service complet d'envoi des prompts vidéo
+- **Détection automatique** - Utilise Vast.ai si configuré, sinon fallback local
+- **Webhook endpoint** - POST `/api/v1/webhook/vast` pour recevoir les vidéos
+- **Stockage cloud** - Support S3, GCS et autres via métadonnées
+- **Base de données** - Nouveaux champs: `videoUrl`, `vastJobId`, `cloudProvider`, `metadata`
+- **Mode mock** - Fonctionne sans instance Vast.ai pour les tests
+- **Sécurité** - Vérification de signature webhook
+- **Documentation complète** - Guide d'intégration et exemples
+
 ### Pipeline Vidéo
 - **Jobs asynchrones** - Système de queue avec BullMQ
-- **Worker de traitement** - Pipeline complet 4 étapes
-- **Suivi de progression** - 0% → 20% → 45% → 70% → 100%
+- **Worker intelligent** - Détecte Vast.ai et adapte le pipeline
+- **Double pipeline** - Vast.ai (production) ou local (fallback)
+- **Suivi de progression** - 0% → 20% (script) → 30% (envoi Vast.ai) → 100% (webhook)
 - **Gestion des erreurs** - Statuts PENDING/RUNNING/COMPLETED/FAILED
-- **Métadonnées riches** - Scripts, prompts, URLs dans les résultats
+- **Métadonnées riches** - Scripts, prompts, URLs, vastJobId dans les résultats
 
 ### 📡 API REST
-- **Endpoints complets** - Auth, Profile, Video, System
+- **Endpoints complets** - Auth, Profile, Video, Webhook, System
 - **Validation Zod** - Paramètres d'entrée sécurisés
 - **Pagination** - Liste des vidéos avec page/pageSize
 - **Swagger UI** - Documentation interactive sur /docs

@@ -5,9 +5,11 @@ import * as svc from './video.service.js';
 const ReqSchema = z.object({
     script: z.string().optional(),
     tone: z.string().optional(),
-    duration: z.coerce.number().int().positive().optional(),
+    duration: z.coerce.number().int().positive().max(300).optional(),
     format: z.string().optional(),
     platform: z.string().optional(),
+    visualStyle: z.string().optional(),
+    useModularGeneration: z.boolean().optional(),
     assets: z.array(z.number()).optional(),
 });
 

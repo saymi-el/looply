@@ -1,4 +1,4 @@
-import type { VideoPrompt } from './script.service.js';
+import type { VideoPrompt } from '../script/script.service.js';
 
 export async function assembleVideo(components: { 
     script: string; 

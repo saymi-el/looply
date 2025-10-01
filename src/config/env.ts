@@ -14,6 +14,9 @@ const EnvSchema = z.object({
     WAN_ENDPOINT: z.string().optional(),
     WAN_API_KEY: z.string().optional(),
     CORS_ORIGIN: z.string().optional(),
+    VAST_API_URL: z.string().url().optional(),
+    VAST_API_KEY: z.string().optional(),
+    VAST_WEBHOOK_SECRET: z.string().optional(),
 });
 
 

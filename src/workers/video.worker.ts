@@ -3,10 +3,11 @@ import IORedis from 'ioredis';
 import { env } from '../config/env.js';
 import { prisma } from '../config/db.js';
 import logger from '../config/logger.js';
-import { generateScript } from '../modules/ai/script.service.js';
-import { textToSpeech } from '../modules/ai/audio.service.js';
-import { generateVisualAssets, type VisualPrompt } from '../modules/ai/model.service.js';
-import { assembleVideo } from '../modules/ai/shotstack.service.js';
+import { generateScript } from '../modules/ai/script/script.service.js';
+import { vastService, isVastConfigured } from '../modules/vast/index.js';
+import { textToSpeech } from '../modules/ai/audio/audio.service.js';
+import { generateVisualAssets, type VisualPrompt } from '../modules/ai/visual/model.service.js';
+import { assembleVideo } from '../modules/ai/video/shotstack.service.js';
 
 
 const connection = new IORedis(env.REDIS_URL, {
@@ -30,19 +31,21 @@ logger.info({
     topic: request.platform ?? 'contenu',
     tone: request.tone,
     duration: request.duration || 15 
-}, 'Démarrage génération script avec OpenAI...');
+}, 'Starting script generation with OpenAI');
 
 const scriptData = request.script 
     ? { 
         text: request.script, 
-        duration: 15, 
+        duration: request.duration || 15, 
         videoPrompts: [] 
       }
     : await generateScript({
         topic: request.platform ?? 'contenu',
         tone: request.tone,
         context: request,
-        duration: request.duration || 15
+        duration: request.duration || 15,
+        visualStyle: request.visualStyle || 'professional',
+        useModularGeneration: true
       });
 
 logger.info({ 
@@ -51,7 +54,7 @@ logger.info({
     promptsCount: scriptData.videoPrompts.length,
     script: scriptData.text,
     videoPrompts: scriptData.videoPrompts
-}, '✅ Script généré par OpenAI');
+}, 'Script generated successfully');
 
 steps.push({ 
     name: 'script', 
@@ -67,6 +70,49 @@ steps.push({
 await job.updateProgress(20);
 
 await prisma.videoJob.update({ where: { id: row.id }, data: { progress: 20 } });
+
+// Check if Vast.ai is configured
+if (isVastConfigured()) {
+    logger.info('Using Vast.ai for video generation', { videoJobId: row.id } as any);
+    
+    // Send video prompts to Vast.ai
+    const webhookUrl = `${env.CORS_ORIGIN || 'http://localhost:3000'}/api/v1/webhook/vast`;
+    const vastResponse = await vastService.sendToVast(
+        row.id,
+        scriptData.duration,
+        scriptData.videoPrompts,
+        webhookUrl
+    );
+
+    // Update job with Vast.ai job ID
+    await prisma.videoJob.update({
+        where: { id: row.id },
+        data: {
+            progress: 30,
+            vastJobId: vastResponse.vastJobId,
+            result: {
+                steps,
+                generatedScript: scriptData.text,
+                videoPrompts: scriptData.videoPrompts,
+                vastJobId: vastResponse.vastJobId,
+                status: 'sent_to_vast',
+                message: vastResponse.message
+            } as any
+        }
+    });
+
+    logger.info('Video generation request sent to Vast.ai', {
+        videoJobId: row.id,
+        vastJobId: vastResponse.vastJobId,
+        estimatedCompletionTime: vastResponse.estimatedCompletionTime
+    } as any);
+
+    // Job will be completed via webhook when Vast.ai finishes
+    return;
+}
+
+// Fallback: Use original pipeline if Vast.ai is not configured
+logger.info('Vast.ai not configured, using local pipeline', { videoJobId: row.id } as any);
 
 // Génération de l'audio à partir du script
 const tts = await textToSpeech(scriptData.text);
